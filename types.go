@@ -7,12 +7,19 @@ import (
 )
 
 type Statement struct {
-	ID         string      `json:"id"`
-	Effect     Effect      `json:"effect"`
-	Principals []Principal `json:"principals"`
-	Actions    []Action    `json:"actions"`
-	Resources  []Resource  `json:"resources"`
-	Conditions []Condition `json:"conditions,omitempty"`
+	ID          string      `json:"id"`
+	Active      bool        `json:"active"`
+	Name        string      `json:"name"`
+	Description string      `json:"description"`
+	Effect      Effect      `json:"effect"`
+	Principals  []Principal `json:"principals"`
+	Actions     []Action    `json:"actions"`
+	Resources   []Resource  `json:"resources"`
+	Conditions  []Condition `json:"conditions,omitempty"`
+	CreatedAt   time.Time   `json:"createdAt"`
+	UpdatedAt   time.Time   `json:"updatedAt"`
+	CreatedBy   string      `json:"createdBy"`
+	UpdatedBy   string      `json:"updatedBy"`
 }
 
 type Effect string
