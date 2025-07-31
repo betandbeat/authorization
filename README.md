@@ -29,9 +29,6 @@ The engine is decoupled from the storage layer through the `Storage` interface. 
 
 ```go
 type Storage interface {
-    SaveStatement(statement Statement) error
-    DeleteStatement(id string) error
-    GetStatement(id string) (*Statement, error)
     ListStatementsByPrincipal(principal Principal) ([]Statement, error)
 }
 ```
