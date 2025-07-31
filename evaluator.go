@@ -108,7 +108,7 @@ func statementMatches(stmt Statement, req Request) (bool, error) {
 }
 
 // actionMatches checks if the request's action matches any pattern in the statement's action list.
-func actionMatches(actions []Action, requestedAction Action) bool {
+func actionMatches(actions []ActionID, requestedAction ActionID) bool {
 	for _, a := range actions {
 		if matched, _ := doublestar.Match(string(a), string(requestedAction)); matched {
 			return true

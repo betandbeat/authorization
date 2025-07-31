@@ -13,7 +13,7 @@ type Statement struct {
 	Description string      `json:"description"`
 	Effect      Effect      `json:"effect"`
 	Principals  []Principal `json:"principals"`
-	Actions     []Action    `json:"actions"`
+	Actions     []ActionID  `json:"actions"`
 	Resources   []Resource  `json:"resources"`
 	Conditions  []Condition `json:"conditions,omitempty"`
 	CreatedAt   time.Time   `json:"createdAt"`
@@ -31,7 +31,31 @@ const (
 
 type Principal string
 
-type Action string
+type ActionID string
+
+func NewAction(id ActionID, name, description string) Action {
+	if id == "" {
+		panic("action ID cannot be empty")
+	}
+	if name == "" {
+		name = string(id) // Use ID as name if not provided
+	}
+	return Action{
+		ID:          id,
+		Name:        name,
+		Description: description,
+	}
+}
+
+type Action struct {
+	ID          ActionID `json:"id"`
+	Name        string   `json:"name"`
+	Description string   `json:"description"`
+}
+
+func (a Action) String() string {
+	return string(a.ID)
+}
 
 type Resource string
 
@@ -50,7 +74,7 @@ type Context struct {
 
 type Request struct {
 	Principal Principal `json:"principal" expr:"principal"`
-	Action    Action    `json:"action" expr:"action"`
+	Action    ActionID  `json:"action" expr:"action"`
 	Resource  Resource  `json:"resource" expr:"resource"`
 	Context   Context   `json:"context" expr:"context"`
 }

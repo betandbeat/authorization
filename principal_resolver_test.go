@@ -48,7 +48,7 @@ func TestExpandingEvaluator(t *testing.T) {
 		ID:         "allow-moderator-download",
 		Effect:     EffectAllow,
 		Principals: []Principal{"roles/moderator"},
-		Actions:    []Action{"invoice.download"},
+		Actions:    []ActionID{"invoice.download"},
 		Resources:  []Resource{"invoices/*"},
 	}
 	storage.SaveStatement(moderatorStatement)
@@ -58,7 +58,7 @@ func TestExpandingEvaluator(t *testing.T) {
 		ID:         "deny-analyst-specific",
 		Effect:     EffectDeny,
 		Principals: []Principal{"roles/analyst"},
-		Actions:    []Action{"invoice.download"},
+		Actions:    []ActionID{"invoice.download"},
 		Resources:  []Resource{"invoices/238423684"},
 	}
 	storage.SaveStatement(analystDenyStatement)
