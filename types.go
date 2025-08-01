@@ -72,12 +72,6 @@ type Context struct {
 	}
 }
 
-type Response struct {
-	Effect  Effect  `json:"effect"`
-	Message string  `json:"message"`
-	Decider *string `json:"decider,omitempty"`
-}
-
 type Storage interface {
 	ListStatementsByPrincipal(principal Principal) ([]Statement, error)
 }
