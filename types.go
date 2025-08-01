@@ -72,13 +72,6 @@ type Context struct {
 	}
 }
 
-type Request struct {
-	Principal Principal `json:"principal" expr:"principal"`
-	Action    ActionID  `json:"action" expr:"action"`
-	Resource  Resource  `json:"resource" expr:"resource"`
-	Context   Context   `json:"context" expr:"context"`
-}
-
 type Response struct {
 	Effect  Effect  `json:"effect"`
 	Message string  `json:"message"`
