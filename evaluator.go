@@ -84,6 +84,13 @@ func (e *evaluator) Evaluate(req Request) (Response, error) {
 	}, nil
 }
 
+func enhancePattern(pattern string) string {
+	if pattern == "*" {
+		return "**" // Treat "*" as a wildcard for any resource
+	}
+	return pattern	
+}
+
 // statementMatches checks if a statement's principals, actions, resources, and conditions
 // are all satisfied by the request.
 func statementMatches(stmt Statement, req Request) (bool, error) {
@@ -110,7 +117,7 @@ func statementMatches(stmt Statement, req Request) (bool, error) {
 // actionMatches checks if the request's action matches any pattern in the statement's action list.
 func actionMatches(actions []ActionID, requestedAction ActionID) bool {
 	for _, a := range actions {
-		if matched, _ := doublestar.Match(string(a), string(requestedAction)); matched {
+		if matched, _ := doublestar.Match(enhancePattern(string(a)), string(requestedAction)); matched {
 			return true
 		}
 	}
@@ -120,7 +127,7 @@ func actionMatches(actions []ActionID, requestedAction ActionID) bool {
 // resourceMatches checks if the request's resource matches any pattern in the statement's resource list.
 func resourceMatches(resources []Resource, requestedResource Resource) bool {
 	for _, r := range resources {
-		if matched, _ := doublestar.Match(string(r), string(requestedResource)); matched {
+		if matched, _ := doublestar.Match(enhancePattern(string(r)), string(requestedResource)); matched {
 			return true
 		}
 	}
@@ -130,7 +137,7 @@ func resourceMatches(resources []Resource, requestedResource Resource) bool {
 // Add this new function for principal matching
 func principalMatches(principals []Principal, requestedPrincipal Principal) bool {
 	for _, p := range principals {
-		if matched, _ := doublestar.Match(string(p), string(requestedPrincipal)); matched {
+		if matched, _ := doublestar.Match(enhancePattern(string(p)), string(requestedPrincipal)); matched {
 			return true
 		}
 	}
